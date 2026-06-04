@@ -77,15 +77,6 @@ public class CardboardMixinPlugin implements IMixinConfigPlugin {
             return false;
         }
 
-        if ((mixin.equals("server.network.ServerGamePacketListenerImplMixin")
-                || mixin.equals("server.network.ServerLoginPacketListenerImplMixin"))
-                && (FabricLoader.getInstance().isModLoaded("sgui")
-                || FabricLoader.getInstance().isModLoaded("fabric-networking-api-v1")
-                || FabricLoader.getInstance().isModLoaded("polymer-networking"))) {
-            logger.warn("Disabling overwrite-heavy networking mixin '{}' for compatibility with injected networking mods.", mixin);
-            return false;
-        }
-
         if (mixin.equals("world.item.consume_effects.TeleportRandomlyConsumeEffectMixin")) {
             FabricLoader loader = FabricLoader.getInstance();
             boolean create_mod = loader.isModLoaded("porting_lib");
