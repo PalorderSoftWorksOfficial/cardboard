@@ -50,4 +50,45 @@ public class ProjectileMixin extends EntityMixin {
         return null; // Shadowed
     }
 
+    /**
+     * @param b
+     */
+    @Override
+    public void cb$setInWorld(boolean b) {
+
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public boolean cb$getInWorld() {
+        return false;
+    }
+
+    /**
+     * @param ignoreClimbing
+     * @return
+     */
+    @Override
+    public boolean cardboard$isCollidable(boolean ignoreClimbing) {
+        return false;
+    }
+
+    /**
+     * @param entity
+     * @return
+     */
+    @Override
+    public boolean cardboard$canCollideWithBukkit(Entity entity) {
+        return false;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public float cardboard$getBukkitYaw() {
+        return 0;
+    }
 }

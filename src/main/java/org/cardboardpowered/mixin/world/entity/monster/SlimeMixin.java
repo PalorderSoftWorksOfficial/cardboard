@@ -3,6 +3,8 @@ package org.cardboardpowered.mixin.world.entity.monster;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.monster.Slime;
 import org.cardboardpowered.mixin.world.entity.EntityMixin;
 import org.spongepowered.asm.mixin.Mixin;
@@ -24,6 +26,48 @@ public class SlimeMixin extends EntityMixin implements SlimeBridge {
     private List<net.minecraft.world.entity.LivingEntity> slimes_B = new ArrayList<>();
 
     private final Random randoms = new Random();
+
+    /**
+     * @param b
+     */
+    @Override
+    public void cb$setInWorld(boolean b) {
+
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public boolean cb$getInWorld() {
+        return false;
+    }
+
+    /**
+     * @param ignoreClimbing
+     * @return
+     */
+    @Override
+    public boolean cardboard$isCollidable(boolean ignoreClimbing) {
+        return false;
+    }
+
+    /**
+     * @param entity
+     * @return
+     */
+    @Override
+    public boolean cardboard$canCollideWithBukkit(Entity entity) {
+        return false;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public float cardboard$getBukkitYaw() {
+        return 0;
+    }
 
     // TODO: 1.19
     /*@Redirect(at = @At(value = "INVOKE", target = "Ljava/util/Random;nextInt(I)I"), method = "remove")

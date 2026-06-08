@@ -2,6 +2,7 @@ package org.cardboardpowered.mixin.world.entity.projectile;
 
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.FireworkRocketEntity;
 import org.bukkit.craftbukkit.event.CraftEventFactory;
 import org.cardboardpowered.api.event.CardboardFireworkExplodeEvent;
@@ -33,5 +34,47 @@ public class FireworkRocketEntityMixin extends EntityMixin {
     @Inject(method = "dealExplosionDamage", at = @At(value = "INVOKE", shift = At.Shift.AFTER, target = "Lnet/minecraft/world/entity/LivingEntity;hurtServer(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;F)Z"))
     private void bukkitDamageSourceReset(ServerLevel world, CallbackInfo ci) {
         CraftEventFactory.entityDamage = null;
+    }
+
+    /**
+     * @param b
+     */
+    @Override
+    public void cb$setInWorld(boolean b) {
+
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public boolean cb$getInWorld() {
+        return false;
+    }
+
+    /**
+     * @param ignoreClimbing
+     * @return
+     */
+    @Override
+    public boolean cardboard$isCollidable(boolean ignoreClimbing) {
+        return false;
+    }
+
+    /**
+     * @param entity
+     * @return
+     */
+    @Override
+    public boolean cardboard$canCollideWithBukkit(Entity entity) {
+        return false;
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public float cardboard$getBukkitYaw() {
+        return 0;
     }
 }

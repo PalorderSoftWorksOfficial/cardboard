@@ -1,6 +1,7 @@
 package org.cardboardpowered.mixin.world.entity.decoration;
 
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
@@ -99,7 +100,27 @@ public class ArmorStandMixin extends EntityMixin implements ArmorStandBridge {
             cir.setReturnValue(true);
         }
     }
-    
+
+    @Override
+    public void cb$setInWorld(boolean b) {
+
+    }
+
+    @Override
+    public boolean cb$getInWorld() {
+        return false;
+    }
+
+    @Override
+    public boolean cardboard$isCollidable(boolean ignoreClimbing) {
+        return false;
+    }
+
+    @Override
+    public boolean cardboard$canCollideWithBukkit(Entity entity) {
+        return false;
+    }
+
     /**
      * PlayerArmorStandManipulateEvent
      * 
