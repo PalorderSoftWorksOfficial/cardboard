@@ -228,7 +228,7 @@ public abstract class EntityMixin implements CommandSourceBridge, EntityBridge {
                 b = Pose.FALL_FLYING;
                 break;
             case LONG_JUMPING:
-                // TODO 1.17ify
+                b = Pose.LONG_JUMPING;
                 break;
             case SLEEPING:
                 b = Pose.SLEEPING;
@@ -319,64 +319,3 @@ public abstract class EntityMixin implements CommandSourceBridge, EntityBridge {
             ((Entity) (Object) this).igniteForSeconds(15);
         }
     }
-
-	@Override
-	public void cb$setInWorld(boolean b) {
-		cardboard$inWorld = b;
-	}
-
-	@Override
-	public boolean cb$getInWorld() {
-		return cardboard$inWorld;
-	}
-
-    // TODO
-    
-    /*
-    @Inject(method = "addPassenger", at = @At(value = "INVOKE", target = "Lcom/google/common/collect/ImmutableList;isEmpty()Z"))
-    private void fireCardboardEntityMountEvent(Entity passenger, CallbackInfo ci) {
-        ActionResult result = CardboardEntityMountEvent.EVENT.invoker().interact(((Entity) (Object) this), passenger);
-
-        if (result == ActionResult.FAIL) {
-            ci.cancel();
-        }
-    }
-    */
-	
-	/**
-	 * Save Bukkit WorldUUID
-	 * 
-	 * @author Cardboard
-	 */
-	@Inject(method = "saveWithoutId", at = @At(value = "INVOKE", shift = At.Shift.AFTER, ordinal = 0, target = "Lnet/minecraft/world/level/storage/ValueOutput;store(Ljava/lang/String;Lcom/mojang/serialization/Codec;Ljava/lang/Object;)V"))
-    public void cardboard$writeData_saveBukkitWorldUuid(ValueOutput output, CallbackInfo ci) {
-		output.putLong("WorldUUIDLeast", this.level.cardboard$getWorld().getUID().getLeastSignificantBits());
-		output.putLong("WorldUUIDMost", this.level.cardboard$getWorld().getUID().getMostSignificantBits());
-    }
-
-    @Inject(method = "isPushable", at = @At("HEAD"), cancellable = true)
-    public void isPushablePaper(CallbackInfoReturnable<Boolean> cir) {
-        // Paper start - Climbing should not bypass cramming gamerule
-        cir.setReturnValue(cardboard$isCollidable(false));
-    }
-
-    @Override
-    public boolean cardboard$isCollidable(boolean ignoreClimbing) {
-        // Paper end - Climbing should not bypass cramming gamerule
-        return false;
-    }
-
-    // CraftBukkit start - collidable API
-    @Override
-    public boolean cardboard$canCollideWithBukkit(Entity entity) {
-        return this.isPushable();
-    }
-    // CraftBukkit end
-
-    // CraftBukkit start
-    @Override
-    public float cardboard$getBukkitYaw() {
-        return this.yRot;
-    }
-    // CraftBukkit end
-}
